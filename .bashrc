@@ -1,24 +1,56 @@
-source ~/.git-completion.bash
-#source ~/.git-prompt.sh
+# use whatever defaults is on the system. Override as needed below.
+if [ -f /etc/bashrc ]; then
+    . /etc/bashrc
+fi
 
-alias ls="ls -G"
+###############################################################################
+#                                                                             #
+#                           SYSTEM SPECIFIC STUFF                             #
+#                                                                             #
+###############################################################################
+
+PLATFORM="$(uname)"
+
+if [[ "$PLATFORM" == "Darwin" ]]; then
+    alias ls="ls -G"  # add colors
+    alias vim=/usr/local/bin/vim
+
+    export GDAL_DRIVER_PATH=/usr/local/lib/gdalplugins
+
+    # homebrew clashes with the system sometimes
+    export VIMRUNTIME=/usr/local/share/vim/vim80/
+
+    # LS COLORS
+    export CLICOLOR=1
+    export LSCOLORS=gxfxcxdxbxegedabagacad
+
+elif [[ "$PLATFORM" == "Linux" ]]; then
+    :
+fi
+
+###############################################################################
+#                                                                             #
+#                               GENERIC SETTINGS                              #
+#                                                                             #
+###############################################################################
+
 alias ll="ls -l"
-alias dir=ls
-alias vim=/usr/local/bin/vim
+alias la="ls -a"
+alias dir=ls # yes, I spend too much time on windows systems :(
 
-export GDAL_DRIVER_PATH=/usr/local/lib/gdalplugins
-export VIMRUNTIME=/usr/local/share/vim/vim80/
-
-
-# LS COLORS
-export CLICOLOR=1
-export LSCOLORS=gxfxcxdxbxegedabagacad
+# git, you complete me <3
+source ~/.git-completion.bash
 
 # locale
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
-# promtp stuff
+###############################################################################
+#                                                                             #
+#                                  PROMPT SETUP                               #
+#                                                                             #
+###############################################################################
+
 export PROMPT_COMMAND=build_prompt
 
 RESET="\[\033[0m\]"
