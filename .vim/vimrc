@@ -1,0 +1,94 @@
+""" USEFUL KEYBOARD SHORTCUTS """
+"
+" ALL SYSTEMS:
+"
+"   F9:         open/close current fold
+"   F10:        open/close all folds in document
+"
+" WINDOWS:
+"
+"   CTRL Q:     Visual block select
+"
+" UNIX:
+"
+"
+set nocompatible
+
+" In case of windows!
+if has("win32") || has("win16")
+  source $VIMRUNTIME/mswin.vim
+  behave mswin
+  set keymodel-=stopsel   " Allow the arrow keys to be used when using visual select
+
+  " Make sure that VIM is able to find the OSGeo4W Python.
+  " For some reason the correct version of python is not
+  " found when the default path in windows is used.
+  let osgeo4wdir='C:\OSGeo4W64\bin'
+  if isdirectory(osgeo4wdir)
+      let $PATH = osgeo4wdir . ';' . $PATH
+  endif
+endif
+
+
+set nobackup              " no ~ files, because who cares...
+set noswapfile
+"set ignorecase            " when searching
+set hlsearch              " highlight search matches. Use :nohl to remove highlight
+set visualbell t_vb=      " no sounds
+set ruler                 " status bar with cursor placement
+set list
+
+filetype plugin on
+filetype indent on
+
+" FILETYPES
+let filetype_pas = "pascal"
+let pascal_delphi=1
+let pascal_symbol_operator=1
+let pascal_one_line_string=1
+
+let python_python_highlight_all=1
+
+" LOOKS
+colors jellybeans
+syntax on
+
+set backspace=2
+set shiftwidth=4
+set tabstop=4
+set softtabstop=4
+set expandtab
+set nu
+set guifont=Consolas:h10:b:cANSI
+set guioptions-=T         " Removes top toolbar
+"set lines=50 columns=120
+
+" FOLDING
+set foldmethod=syntax
+set foldnestmax=1
+set foldlevel=99    " No open folds at startup
+nnoremap <F9> za    " folds/unfolds block under the cursor
+nnoremap <F10> zi   " folds/unfolds entire file
+
+" python folding
+let g:SimpylFold_docstring_preview = 1
+
+" set the foldmethod to manual when in insert mode. Turns it back on when
+" leaving insert mode. Whitout this little hack all folds in a file opens when
+" starting a new code block with a curly bracket. This way folds stay closed
+" when they are supposed to.
+autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
+autocmd InsertLeave,WinLeave * if exists('w:last_fdm') | let &l:foldmethod=w:last_fdm | unlet w:last_fdm | endif
+
+" Pathogen plugin manager
+execute pathogen#infect()
+execute pathogen#helptags()
+
+" vim-jedi (tab completion for python)
+if has("gui_running")
+    let g:jedi#use_tabs_not_buffers = 1
+endif
+let g:jedi#popup_on_dot = 0
+let g:jedi#popup_select_first = 0
+let g:jedi#show_call_signatures = 0
+let g:jedi#smart_auto_mappings = 0

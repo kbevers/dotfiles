@@ -1,0 +1,76 @@
+""" USEFUL KEYBOARD SHORTCUTS """
+"
+" ALL SYSTEMS:
+"
+"   F9:         open/close current fold
+"   F10:        open/close all folds in document
+"
+" WINDOWS:
+"
+"   CTRL Q:     Visual block select
+"
+" UNIX:
+"
+"
+
+set nocompatible
+"source $VIMRUNTIME/vimrc_example.vim
+
+" In case of windows!
+if has("win32") || has("win16")
+  source $VIMRUNTIME/mswin.vim
+  behave mswin
+  set keymodel-=stopsel   " Allow the arrow keys to be used when using visual select
+endif
+
+set nobackup              " no ~ files, because who cares...
+set noswapfile
+set ignorecase            " when searching
+set hlsearch              " highlight search matches. Use :nohl to remove highlight
+set visualbell t_vb=      " no sounds
+set ruler                 " status bar with cursor placement
+
+filetype plugin on
+filetype indent on
+
+" FILETYPES
+let filetype_pas = "pascal"
+let pascal_delphi=1
+let pascal_symbol_operator=1
+let pascal_one_line_string=1
+
+let python_python_highlight_all=1
+
+" LOOKS
+colors jellybeans
+syntax on
+
+set backspace=2
+set shiftwidth=4
+set tabstop=2
+set expandtab
+set nu
+set guifont=Consolas:h10:b:cANSI
+set guioptions-=T         " Removes top toolbar
+set lines=50 columns=120
+
+" Run python scipt
+map <F2> :w<CR>:exe ":!python2 " . getreg("%") . "" <CR>
+map <F3> :w<CR>:exe ":!python3 " . getreg("%") . "" <CR>
+
+" FOLDING
+set foldmethod=syntax
+set foldnestmax=1
+set foldlevel=99
+nnoremap <F9> za    " folds/unfolds block under the cursor
+nnoremap <F10> zi   " folds/unfolds entire file
+
+" python folding
+let g:SimpylFold_docstring_preview = 1
+
+" set the foldmethod to manual when in insert mode. Turns it back on when
+" leaving insert mode. Whitout this little hack all folds in a file opens when
+" starting a new code block with a curly bracket. This way folds stay closed
+" when they are supposed to.
+autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
+autocmd InsertLeave,WinLeave * if exists('w:last_fdm') | let &l:foldmethod=w:last_fdm | unlet w:last_fdm | endif
