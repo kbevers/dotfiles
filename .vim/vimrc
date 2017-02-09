@@ -50,6 +50,7 @@ let pascal_one_line_string=1
 let python_python_highlight_all=1
 
 " LOOKS
+set t_Co=256 " force use of all in terminals 256 colors
 colors jellybeans
 syntax on
 
