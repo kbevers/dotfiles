@@ -40,6 +40,8 @@ alias dir=ls # yes, I spend too much time on windows systems :(
 
 # git, you complete me <3
 source ~/.git-completion.bash
+# tmux completion
+source ~/.tmux.completion.bash
 
 # locale
 export LC_ALL=en_US.UTF-8
