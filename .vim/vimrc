@@ -37,6 +37,7 @@ set hlsearch              " highlight search matches. Use :nohl to remove highli
 set visualbell t_vb=      " no sounds
 set ruler                 " status bar with cursor placement
 set list
+set mouse=a               " Scroll with mouse wheel in terminal
 
 filetype plugin on
 filetype indent on
