@@ -89,6 +89,7 @@ function build_prompt {
 
     PS_INFO="$GREEN\u@\h$RESET:$BLUE\w"
     PS_GIT="$YELLOW\$PS_BRANCH"
+    PS_CONDA="$RED($CONDA_DEFAULT_ENV) $RESET"
 
     if [ $EXIT != 0 ]; then
         PS_TIME="\[\033[\$((COLUMNS-12-${#EXIT}))G\]\] $RED<$EXIT>[\t]"
@@ -96,7 +97,7 @@ function build_prompt {
         PS_TIME="\[\033[\$((COLUMNS-10))G\]\] $GREEN[\t]"
     fi
 
-    PS1="\${PS_FILL}\[\033[0G\]${PS_INFO} ${PS_GIT}${PS_TIME}\n${RESET}\$ "
+    PS1="\${PS_FILL}\[\033[0G\]${PS_CONDA}${PS_INFO} ${PS_GIT}${PS_TIME}\n${RESET}\$ "
 }
 
 
